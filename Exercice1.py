@@ -107,18 +107,18 @@ class Product:
     def __init__(self, pid, marked_price, discount):
         self.pid = pid
         self.marked_price = marked_price
-        self.discount = discount
+        self._discount = discount
 
     def display(self):
-        print(self.pid, self.marked_price, self.discount)
+        print(self.pid, self.marked_price, self._discount)
 
     @property
     def selling_price(self):
-        return self.marked_price - (self.marked_price * (self.discount / 100))
+        return self.marked_price - (self.marked_price * (self._discount / 100))
 
     @property
     def discount(self):
-        return self.discount
+        return self._discount
 
     @discount.setter
     def discount(self, value):
@@ -129,3 +129,25 @@ p1 = Product('X879', 400, 6)
 p2 = Product('A234', 100, 5)
 p3 = Product('B987', 990, 4)
 p4 = Product('H456', 800, 6)
+
+p1.discount = 10
+p1.display()
+
+
+class Circle:
+    def __init__(self, radius, circumference):
+        self.radius = radius
+        self._diameter = self.radius * 2
+        self._circumference = circumference
+
+    @property
+    def radius(self):
+        return self.radius
+
+    @radius.setter
+    def radius(self, new_radius):
+        if new_radius > 0:
+            self.radius = new_radius
+        else:
+            raise ValueError('Radius cannot be under zero')
+
