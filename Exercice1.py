@@ -74,7 +74,14 @@ class Fraction:
         print(self.nr, '/', self.dr)
 
     def multiply(self, fraction):
+        if isinstance(fraction, int):
+            fraction = Fraction(fraction, 1)
         return Fraction(self.nr * fraction.nr, self.dr * fraction.dr)
+
+    def add(self, nbr):
+        if isinstance(nbr, int):
+            nbr = Fraction(nbr, 1)
+        return Fraction((self.nr * nbr.dr + self.dr * nbr.nr), (self.dr * nbr.dr))
 
 
 f1 = Fraction(2, 3)
@@ -86,3 +93,39 @@ f2.show()
 f3 = f1.multiply(f2)
 f3.show()
 
+f3 = f1.add(f2)
+f3.show()
+
+f3 = f1.add(5)
+f3.show()
+
+f3 = f1.multiply(5)
+f3.show()
+
+
+class Product:
+    def __init__(self, pid, marked_price, discount):
+        self.pid = pid
+        self.marked_price = marked_price
+        self.discount = discount
+
+    def display(self):
+        print(self.pid, self.marked_price, self.discount)
+
+    @property
+    def selling_price(self):
+        return self.marked_price - (self.marked_price * (self.discount / 100))
+
+    @property
+    def discount(self):
+        return self.discount
+
+    @discount.setter
+    def discount(self, value):
+        self._discount = value
+
+
+p1 = Product('X879', 400, 6)
+p2 = Product('A234', 100, 5)
+p3 = Product('B987', 990, 4)
+p4 = Product('H456', 800, 6)
