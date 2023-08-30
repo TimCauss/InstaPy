@@ -2,28 +2,20 @@
 
 class Person:
 
+    species = 'Homo Sapiens'
+    count = 0
+
     def __init__(self, name, age):
         self.name = name
         self.age = age
+        Person.count += 1
 
     def display(self):
-        print('I am ', self.name)
+        print(f'{self.name} is {self.age} years old')
 
-    def greet(self):
-        if self.age < 80:
-            print('Hello, how are you doing ?')
-        else:
-            print('Hello, how do you do ?')
-
-    def get_old(self):
-        self.age = 75
 
 p1 = Person('John', 20)
+p2 = Person('Jack', 34)
 
 p1.display()
-p1.greet()
-
-p2 = Person('Jack', 90)
-
 p2.display()
-p2.greet()
