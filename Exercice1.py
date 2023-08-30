@@ -27,7 +27,11 @@ class Book:
         self._copies = copies
 
     def display_info(self):
-        print(self._isbn, '-', self._title, '-', self._price, '$ -', self._copies)
+        print(self._title)
+        print(f'ISBN : {self._isbn}')
+        print(f'Price : {self._price}$')
+        print(f'Number of copies : {self._copies}')
+        print('.....')
 
     def in_stock(self):
         if 0 < self._copies:
@@ -47,7 +51,7 @@ class Book:
 
     @price.setter
     def price(self, new_price):
-        if 50 < new_price < 1000:
+        if 50 <= new_price <= 1000:
             self._price = new_price
         else:
             raise ValueError('Price must be between 50 and 1000')
@@ -67,6 +71,7 @@ class Fraction:
     def __init__(self, nr, dr=1):
         if dr < 0:
             dr = -dr
+            nr = -nr
         self.nr = nr
         self.dr = dr
 
@@ -130,15 +135,18 @@ p2 = Product('A234', 100, 5)
 p3 = Product('B987', 990, 4)
 p4 = Product('H456', 800, 6)
 
-p1.discount = 10
-p1.display()
+print(p1.pid, p1.selling_price)
+print(p2.pid, p2.selling_price)
+print(p3.pid, p3.selling_price)
+print(p4.pid, p4.selling_price)
 
 
 class Circle:
-    def __init__(self, radius, circumference):
+    def __init__(self, radius):
         self.radius = radius
         self._diameter = self.radius * 2
-        self._circumference = circumference
+        self._circumference = self.radius * 2 * 3.14
+        self._area = self.radius * self.radius * 3.14
 
     @property
     def radius(self):
@@ -150,4 +158,3 @@ class Circle:
             self.radius = new_radius
         else:
             raise ValueError('Radius cannot be under zero')
-
