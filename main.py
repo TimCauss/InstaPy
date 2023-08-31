@@ -1,16 +1,32 @@
-# This is a sample Python script.
+import os
 
-# Press Maj+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import kivy
+from kivy.app import App
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.label import Label
+from kivy.uix.textinput import TextInput
+
+kivy.require('2.2.1')
+os.environ['KIVY_TEXT'] = 'pil'
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+class MainScreen(GridLayout):
+
+    def __init__(self, **kwargs):
+        super(MainScreen, self).__init__(**kwargs)
+
+        self.rows = 2
+        self.cols = 2
+        self.add_widget(Label(text='Username'))
+        self.username = TextInput(multiline=False)
+        self.add_widget(self.username)
 
 
-# Press the green button in the gutter to run the script.
+class MyApp(App):
+
+    def build(self):
+        return MainScreen()
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    MyApp().run()
