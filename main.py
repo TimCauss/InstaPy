@@ -1,18 +1,35 @@
-# This is a sample Python script.
+from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 
-# Press Maj+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import datetime
+import os
+import logging
+
+ct = datetime.datetime.now()
+
+logging.basicConfig(filename='info.log', encoding='utf-8', level=logging.DEBUG)
 
 
-class Webdriver:
-    def __init__(self, account, password_list):
-        self.account = account
-        self.passwords_list = password_list
 
 
+def main_task():
+
+    #Variable de fonctionnement
+    driver = webdriver.Chrome()
+    timeout_time = 0.5
+    connexion_url = 'https://www.instagram.com/accounts/login/'
+
+    #configuration du driver
+    driver.implicitly_wait(timeout_time)
+
+    try :
+        logging.info(f'{ct}: Navigate to {connexion_url}...')
+        driver.get(connexion_url)
+    except TimeoutException as ex:
+        logging.error(f'')
 
 
-if __name__ == '__main__':
-    Webdriver()
-
+def connexion_loop():
 
