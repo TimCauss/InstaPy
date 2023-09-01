@@ -75,12 +75,12 @@ class Fraction:
 
     def multiply(self, fraction):
         if isinstance(fraction, int):
-            fraction = Fraction(fraction, 1)
+            fraction = Fraction(fraction)
         return Fraction(self.nr * fraction.nr, self.dr * fraction.dr)
 
     def add(self, nbr):
         if isinstance(nbr, int):
-            nbr = Fraction(nbr, 1)
+            nbr = Fraction(nbr)
         return Fraction((self.nr * nbr.dr + self.dr * nbr.nr), (self.dr * nbr.dr))
 
 
@@ -93,12 +93,14 @@ f2.show()
 f3 = f1.multiply(f2)
 f3.show()
 
+
 f3 = f1.add(f2)
 f3.show()
 
 f3 = f1.add(5)
 f3.show()
 
+f1 = Fraction(2, 3)
 f3 = f1.multiply(5)
 f3.show()
 
