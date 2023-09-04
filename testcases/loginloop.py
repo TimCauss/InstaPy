@@ -3,7 +3,6 @@ import random
 import undetected_chromedriver as uc
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver import Keys
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 
 import time
@@ -119,7 +118,6 @@ def login_loop():
                 print(f'Trying {count} - Wrong password : {password}')
                 time.sleep(0.3)
                 for _ in range(len(password[0]) + 1):
-                    print(f'{_}')
                     password_input.send_keys(Keys.BACKSPACE)
                 fake_time_wait()
             else:
