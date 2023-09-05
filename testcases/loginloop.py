@@ -14,15 +14,13 @@ logging.basicConfig(filename='info.log', filemode='w', encoding='utf-8', level=l
                     datefmt="%H:%M:%S")
 
 #
-# UNDETECTED chromedriver var
+# UNDETECTED chromedriver var0
 #
 driver = uc.Chrome()
 
 connexion_url = 'https://www.instagram.com/accounts/login/'
 account = 'Tim0ut_13'
 file_path = 'test.txt'
-
-count = 0
 
 
 def fake_time_wait(min=0.2, max=1.1):
@@ -41,14 +39,6 @@ def read_words(lines):
     words = map(lambda line: line.split(), lines)
     for word in words:
         yield word
-
-
-def check_element_by_text(text):
-    try:
-        driver.find_element(By.XPATH, "//*[text()=" + text)
-        return True
-    except NoSuchElementException as ex:
-        return False
 
 
 def navigate_to_home():
@@ -80,7 +70,6 @@ def login_loop():
 
     try:
         logging.info(f'Logging to account : {account}')
-        username_input.send_keys('')
         fake_time_wait()
         username_input.send_keys(account)
     except NoSuchElementException as ex:
