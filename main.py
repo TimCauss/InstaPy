@@ -63,3 +63,8 @@ class Main(PageFactory):
 
     def login(self):
         self.username_input.set_text(account)
+
+    def fake_time_wait(self):
+        t = random.uniform(0.2, 1.1)
+        time.sleep(t)
+        print(f'Time waited: {t}')
