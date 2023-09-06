@@ -1,10 +1,8 @@
+import cProfile
 import random
 
 import undetected_chromedriver as uc
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
-from selenium.webdriver import Keys
-from selenium.webdriver.common.by import By
-from seleniumpagefactory.Pagefactory import PageFactory
 
 import time
 import logging
@@ -14,57 +12,33 @@ file_path = 'test.txt'
 connexion_url = 'https://www.instagram.com/accounts/login/'
 
 FORMAT = '%(asctime)s - %(levelname)s:%(message)s'
-logging.basicConfig(filename='info.log', filemode='w', encoding='utf-8', level=logging.INFO, format=FORMAT,
+logging.basicConfig(filename='info-oop.log', filemode='w', encoding='utf-8', level=logging.INFO, format=FORMAT,
                     datefmt="%H:%M:%S")
 
 
-def fake_time_wait(min=0.2, max=1.1):
-    t = random.uniform(min, max)
+def fake_time_wait():
+    # This function simulates waiting for a random amount of time between 0.2 and 1.1 seconds.
+    # Generate a random number between 0.2 and 1.1.
+    t = random.uniform(0.2, 1.1)
+    # Sleep for the random amount of time.
     time.sleep(t)
-    print(f'Time waited: {t}')
+    # Log the amount of time that was waited.
+    logging.info(f'Waiting random time between instructions: {t}')
 
 
 def file_to_list(path):
+    # This function takes a path to a file as input and returns a list of words
     with open(path, 'r') as f:
+        # Read all the lines in the file.
         lines = f.readlines()
-    return lines
+        # Split each line into a list of words.
+        words = map(lambda line: line.split(), lines)
+        # Return the list of words.
+        return list(words)
 
 
-def read_words(lines):
-    words = map(lambda line: line.split(), lines)
-    for word in words:
-        yield word
+def test_loop(list):
+    for word in list:
+        print(word)
 
 
-def test_login():
-    driver = uc.Chrome
-    driver.implicitly_wait(0.5)
-
-    bot = Main(driver)
-    bot.gotohome()
-    bot.login()
-
-
-class Main(PageFactory):
-
-    def __init__(self, driver):
-        self.driver = driver
-
-    locators = {
-        'username_input': ('NAME', 'username'),
-        'password_input': ('NAME', 'password'),
-        'connect_btn': ('XPATH', '/html/body/div[2]/div/div/div[2]/div/div/div/div[1]/section/main/div/div/div['
-                                 '1]/div[2]/form/div/div[3]/button/div'),
-        'cookie_reject_btn': ('XPATH', "//*[text()='Refuser les cookies optionnels']")
-    }
-
-    def gotohome(self):
-        self.driver.get(connexion_url)
-
-    def login(self):
-        self.username_input.set_text(account)
-
-    def fake_time_wait(self):
-        t = random.uniform(0.2, 1.1)
-        time.sleep(t)
-        print(f'Time waited: {t}')

@@ -20,7 +20,7 @@ driver = uc.Chrome()
 
 connexion_url = 'https://www.instagram.com/accounts/login/'
 account = 'Tim0ut_13'
-file_path = 'test.txt'
+file_path = '../test.txt'
 
 
 def fake_time_wait(min=0.2, max=1.1):

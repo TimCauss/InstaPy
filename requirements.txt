@@ -1,3 +1,2 @@
 selenium==4.12.0
 undetected-chromedriver==3.5.3
-selenium-page-factory==2.6
