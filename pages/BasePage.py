@@ -1,7 +1,8 @@
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-class BasePage():
+
+class BasePage:
 
     def __init__(self, driver):
         """ This function is called every time a new object of the base class is created"""

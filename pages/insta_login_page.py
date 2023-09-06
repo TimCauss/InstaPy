@@ -1,6 +1,7 @@
 from BasePage import BasePage
 from Resources.locators import LoginPageLocators
 
+
 class LoginPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)

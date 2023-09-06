@@ -35,10 +35,3 @@ def file_to_list(path):
         words = map(lambda line: line.split(), lines)
         # Return the list of words.
         return list(words)
-
-
-def test_loop(list):
-    for word in list:
-        print(word)
-
-
