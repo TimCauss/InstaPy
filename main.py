@@ -1,5 +1,10 @@
 import cProfile
+import os
 import random
+import sys
+import unittest
+
+from base_test import BaseTest
 
 import undetected_chromedriver as uc
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
@@ -35,3 +40,9 @@ def file_to_list(path):
         words = map(lambda line: line.split(), lines)
         # Return the list of words.
         return list(words)
+
+
+base_dir = os.path.dirname(__file__) or '.'
+sys.path.append("..")
+
+from pages.insta_login_page import LoginPage

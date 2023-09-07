@@ -1,9 +1,16 @@
+import sys
+
+
 import logging
+import unittest
 
 from selenium.common import NoSuchElementException
 
 from BasePage import BasePage
 from Resources.locators import LoginPageLocators
+
+
+sys.path.append(sys.path[0] + '/...')
 
 
 class LoginPage(BasePage):
@@ -23,4 +30,5 @@ class LoginPage(BasePage):
             self.driver.close()
 
 
-
+if __name__ == '__main__':
+    unittest.main()
