@@ -1,14 +1,12 @@
 import sys
 
-
 import logging
 import unittest
 
 from selenium.common import NoSuchElementException
 
 from BasePage import BasePage
-from Resources.locators import LoginPageLocators
-
+from Resources.LoginPageLocators import InstaLocators
 
 sys.path.append(sys.path[0] + '/...')
 
@@ -20,7 +18,7 @@ class LoginPage(BasePage):
 
     def reject_cookies(self, ):
         try:
-            self.click(LoginPageLocators.cookies_reject_btn)
+            self.click(InstaLocators.cookies_reject_btn)
             logging.info(f'Rejecting cookies.')
             print(f'ERROR - Rejecting cookies button not found')
         except NoSuchElementException as ex:
@@ -30,5 +28,4 @@ class LoginPage(BasePage):
             self.driver.close()
 
 
-if __name__ == '__main__':
-    unittest.main()
+LoginPage()
