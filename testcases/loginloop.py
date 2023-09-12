@@ -20,13 +20,13 @@ driver = uc.Chrome()
 
 connexion_url = 'https://www.instagram.com/accounts/login/'
 account = 'Tim0ut_13'
-file_path = '../backup/test.txt'
+file_path = 'test.txt'
 
 
 def fake_time_wait(min=0.2, max=1.1):
     t = random.uniform(min, max)
     time.sleep(t)
-    print(f'Time waited: {t}')
+    logging.info(f'Faking reaction time : {round(t, 3)}')
 
 
 def file_to_list(path):
@@ -65,7 +65,8 @@ def login_loop():
     fake_time_wait()
     username_input = driver.find_element(By.NAME, 'username')
     password_input = driver.find_element(By.NAME, 'password')
-    connect_btn = driver.find_element(By.XPATH, "/html/body/div[2]/div/div/div[2]/div/div/div/div[1]/section/main/div/div/div[1]/div[2]/form/div/div[3]/button/div")
+    connect_btn = driver.find_element(By.XPATH,
+                                      "/html/body/div[2]/div/div/div[2]/div/div/div/div[1]/section/main/div/div/div[1]/div[2]/form/div/div[3]/button/div")
 
     try:
         logging.info(f'Logging to account : {account}')

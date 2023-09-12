@@ -6,7 +6,7 @@ import time
 import logging
 
 account = 'Tim0ut_13'
-file_path = 'test.txt'
+file_path = '../testcases/test.txt'
 connexion_url = 'https://www.instagram.com/accounts/login/'
 
 FORMAT = '%(asctime)s - %(levelname)s:%(message)s'
