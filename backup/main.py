@@ -1,13 +1,6 @@
-import cProfile
 import os
 import random
 import sys
-import unittest
-
-from base_test import BaseTest
-
-import undetected_chromedriver as uc
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
 import time
 import logging
@@ -43,6 +36,5 @@ def file_to_list(path):
 
 
 base_dir = os.path.dirname(__file__) or '.'
-sys.path.append("..")
+sys.path.append("../..")
 
-from pages.insta_login_page import LoginPage

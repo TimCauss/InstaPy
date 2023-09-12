@@ -7,7 +7,7 @@ import unittest
 from selenium.common import NoSuchElementException
 
 from BasePage import BasePage
-from Resources.locators import LoginPageLocators
+from backup.locators import LoginPageLocators
 
 
 sys.path.append(sys.path[0] + '/...')

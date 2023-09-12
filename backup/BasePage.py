@@ -1,6 +1,6 @@
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from Resources.WebDriverSetup import WebDriverSetup
+from backup.WebDriverSetup import WebDriverSetup
 
 
 class BasePage(WebDriverSetup):
