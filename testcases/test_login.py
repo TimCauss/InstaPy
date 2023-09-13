@@ -1,20 +1,23 @@
 import os
 import time
+from datetime import datetime
 
 import pytest
 import undetected_chromedriver as uc
 
 from pages.login_page import LoginPage
 from Resources.pass_to_temp import split_words
-
+from Resources.pass_to_temp import password_list
 
 # Config var
 url = 'https://www.instagram.com/accounts/login/'
 proc = 0
 input_file = "test.txt"
 num_temp = 6
-groups = split_words(input_file, num_temp)
+groups = split_words(password_list(input_file), num_temp)
 username = 'Tim0ut_13'
+
+
 #
 
 
@@ -41,13 +44,16 @@ def test_login(driver):
     print(f'{cpu} - Connecting to {url}')
     login_page.open_page(url)
     login_page.is_cookies_here()
-    login_page.login_action(username, 'ifth#512h')
-    time.sleep(5)
 
 
-def test_groups():
-    c = 0
-    for group in groups:
-        for i in group:
-            c += 1
-            print(f'\n{c} - {i}')
+    # passwords = password_list(f'temp{proc}.txt')
+
+    t1 = datetime.now()
+    login_page.enter_username(username)
+    login_page.login_action('testtest')
+    t = (datetime.now() - t1).seconds
+    print(f'Logging Exec Time : {t}')
+
+    # for password in passwords:
+    #     login_page.login_action(password)
+    #     time.sleep(5)

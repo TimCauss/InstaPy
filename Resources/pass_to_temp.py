@@ -1,9 +1,4 @@
-def split_words(input_file, num_temp):
-
-    with open(input_file, "r") as f:
-        words = f.readlines()
-
-    words = [word.strip() for word in words]
+def split_words(words, num_temp):
 
     # Create a list of 6 empty lists, one per group.
     temp = [[] for _ in range(num_temp)]
@@ -22,6 +17,15 @@ def split_words(input_file, num_temp):
     return temp
 
 
+def password_list(path):
+    with open(path, "r") as f:
+        words = f.readlines()
+
+    words = [word.strip() for word in words]
+    return words
+
+
+print(split_words(password_list('test.txt'), 6))
 
 
 # Print the contents of the temp

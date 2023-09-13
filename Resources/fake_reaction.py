@@ -2,7 +2,7 @@ import random
 import time
 
 
-def fake_time_wait(proc):
-    t = random.uniform(0.5, 2)
+def fake_time_wait(proc, a=0.5, b=2):
+    t = random.uniform(a, b)
     time.sleep(t)
     print(f'Process n°{proc} - Faking reaction time : {round(t, 3)}s')
