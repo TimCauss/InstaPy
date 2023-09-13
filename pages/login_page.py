@@ -48,8 +48,15 @@ class LoginPage:
 
     def login_action(self, username, password):
         self.driver.find_element(*self.username_textbox).send_keys(username)
+        fake_time_wait(self.proc)
         self.driver.find_element(*self.password_textbox).send_keys(password)
+        fake_time_wait(self.proc)
         self.driver.find_element(*self.login_btn).click()
 
     def click_login(self):
         self.driver.find_element(*self.login_btn).click()
+
+    # TODO:
+    #  Create method to adding cookies to driver session
+    #  Using cookie_login method or class
+    # def adding_cookies(self):
