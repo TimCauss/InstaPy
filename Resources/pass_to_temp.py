@@ -22,6 +22,8 @@ def split_words(input_file, num_temp):
     return temp
 
 
+
+
 # Print the contents of the temp
 # for i in range(num_temp):
 #     print(f"Group {i + 1}: {groups[i]}")

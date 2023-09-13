@@ -15,8 +15,6 @@ input_file = "test.txt"
 num_temp = 6
 groups = split_words(input_file, num_temp)
 username = 'Tim0ut_13'
-
-
 #
 
 
@@ -45,3 +43,11 @@ def test_login(driver):
     login_page.is_cookies_here()
     login_page.login_action(username, 'ifth#512h')
     time.sleep(5)
+
+
+def test_groups():
+    c = 0
+    for group in groups:
+        for i in group:
+            c += 1
+            print(f'\n{c} - {i}')
