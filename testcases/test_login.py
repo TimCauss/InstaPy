@@ -37,8 +37,15 @@ def test_login(driver):
     global proc
     proc += 1
 
+
     login_page = LoginPage(driver, proc)
     cpu = f'Process n°{login_page.proc}'
+
+    # Todo:
+    #   1. password_list() method who return a list of strings
+    #   form a temp file. Charge the list from file HERE
+
+    print(f'\n{cpu} - Starting')
     print(f'\n{cpu} - Configuration')
 
     print(f'{cpu} - Connecting to {url}')
@@ -49,13 +56,10 @@ def test_login(driver):
     # passwords = password_list(f'temp{proc}.txt')
 
     t1 = datetime.now()
+
     login_page.enter_username(username)
-    login_page.login_action('ifth#512h')
+    login_page.login_action('test')
     t = (datetime.now() - t1).seconds
     print(f'Logging Exec Time : {t}')
     login_page.is_password_works()
     time.sleep(5)
-
-    # for password in passwords:
-    #     login_page.login_action(password)
-    #     time.sleep(5)
