@@ -1,6 +1,5 @@
 import random
 import time
-from curses.ascii import isdigit
 
 
 def fake_time_wait(proc, a=0.5, b=2):

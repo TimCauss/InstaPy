@@ -1,18 +1,28 @@
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
-from backup.WebDriverSetup import WebDriverSetup
+digit = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ' ']
+
+def verif(name):
+    if len(name) <= 2:
+        print('Your name must be at least 2 characters long')
+        return False
+    if name == 'exit':
+        print('Bye!')
+        return False
+    else:
+        print(f'Ton nom est {name}!')
+        return True
 
 
-class BasePage(WebDriverSetup):
+def cleaner(name):
+    for i in digit:
+        name = name.replace(str(i), '')
+    return name
 
-    def __init__(self, driver):
-        """ This function is called every time a new object of the base class is created"""
-        self.driver = driver
 
-    def click(self, by_locator):
-        """ Performs click on web element by_locator """
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(by_locator)).click()
-
-    def enter_text(self, by_locator, text):
-        """ Performs text entry of text argument, in a web element by_locator """
-        return WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(by_locator)).send_keys(text)
+while True:
+    try:
+        name = str(input(f'Enter your name: (entre exit to exit)\n'))
+    except ValueError:
+        print('Invalid input')
+        continue
+    if verif(cleaner(name)):
+        break
