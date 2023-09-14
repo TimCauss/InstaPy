@@ -50,9 +50,11 @@ def test_login(driver):
 
     t1 = datetime.now()
     login_page.enter_username(username)
-    login_page.login_action('testtest')
+    login_page.login_action('ifth#512h')
     t = (datetime.now() - t1).seconds
     print(f'Logging Exec Time : {t}')
+    login_page.is_password_works()
+    time.sleep(5)
 
     # for password in passwords:
     #     login_page.login_action(password)

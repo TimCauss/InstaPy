@@ -1,7 +1,7 @@
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException, ElementNotVisibleException
 
 from selenium.webdriver.support.wait import WebDriverWait
 from Resources.fake_reaction import fake_time_wait
@@ -10,6 +10,7 @@ from Resources.fake_reaction import fake_time_wait
 class LoginPage:
 
     def __init__(self, driver, proc):
+        self.correct_password = False
         self.driver = driver
         self.proc = proc
 
@@ -19,7 +20,11 @@ class LoginPage:
         self.login_btn = (By.XPATH, "//*[@id='loginForm']/div/div[3]/button")
 
         # Error msg locators:
-        self.error_password = (By.CLASS_NAME, "_ab2z")
+        self.login_error_msg = (By.CLASS_NAME, "_ab2z")
+
+
+        # Account page locators:
+        self.foryou_btn = (By.CLASS_NAME, "_ab1a")
 
         # Cookies locators:
         self.cookie_accept_btn = (By.CSS_SELECTOR, ".\\_a9_0")
@@ -59,10 +64,24 @@ class LoginPage:
     def click_login(self):
         self.driver.find_element(*self.login_btn).click()
 
+    def take_screen(self, name):
+        self.driver.save_screenshot(f'{name}.png')
+
     # TODO:
     #   Fonction de detection du message d'erreur de login
-    # def is_password_works(self):
-    #     self.error_password
+    def is_password_works(self):
+        try:
+            self.driver.find_element(*self.login_error_msg).is_displayed()
+        except NoSuchElementException:
+            print(f'Process n°{self.proc} - Right password')
+            self.correct_password = True
+        else:
+            print(f'Process n°{self.proc} - Wrong password')
+            self.correct_password = False
+
+        # if self.driver.find_element(*self.foryou_btn).is_displayed():
+        #     print(f'Congratulations! You have successfully logged in!')
+
 
     # TODO:
     #  Create method to adding cookies to driver session
