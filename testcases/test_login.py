@@ -23,7 +23,7 @@ username = 'Tim0ut_13'
 
 @pytest.fixture()
 def driver():
-    driver = uc.Chrome(headless=False, use_subprocess=True)
+    driver = uc.Chrome(headless=False, use_subprocess=True, version_main=116)
     driver.implicitly_wait(1.5)
     yield driver
     driver.quit()
@@ -36,7 +36,6 @@ def driver():
 def test_login(driver):
     global proc
     proc += 1
-
 
     login_page = LoginPage(driver, proc)
     cpu = f'Process n°{login_page.proc}'
@@ -52,7 +51,6 @@ def test_login(driver):
     login_page.open_page(url)
     login_page.is_cookies_here()
 
-
     # passwords = password_list(f'temp{proc}.txt')
 
     t1 = datetime.now()
@@ -62,4 +60,4 @@ def test_login(driver):
     t = (datetime.now() - t1).seconds
     print(f'Logging Exec Time : {t}')
     login_page.is_password_works()
-    time.sleep(5)
+    time.sleep(15)
