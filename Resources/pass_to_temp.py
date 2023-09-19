@@ -18,6 +18,3 @@ def password_list(path):
 
     words = [word.strip() for word in words]
     return words
-
-
-print(split_words(password_list('test.txt'), 6))

