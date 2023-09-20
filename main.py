@@ -1,24 +1,13 @@
-from PyQt5 import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-
 import sys
+from PyQt5.QtWidgets import QApplication
+from GUI.gui import Fenetre
 
 
-class MainWindow(QMainWindow):
+def main():
+    if __name__ == "__main__":
+        app = QApplication(sys.argv)
+        fenetre = Fenetre()
+        fenetre.show()
 
-    def __init__(self, *args, **kwargs):
-        super(MainWindow, self).__init__(*args, **kwargs)
-
-        self.setWindowTitle("InstaPy - Home")
-
-        button = QPushButton("Click Me")
-        self.setCentralWidget(button)
-
-
-app = QApplication(sys.argv)
-
-window = MainWindow()
-window.show()
-
-app.exec_()
+        # Exécution de l'application Qt
+        app.exec_()

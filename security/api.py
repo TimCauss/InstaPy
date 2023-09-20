@@ -5,11 +5,15 @@ Please see the `OAuth2 example at FastAPI <https://fastapi.tiangolo.com/tutorial
 use the great `Authlib package <https://docs.authlib.org/en/v0.13/client/starlette.html#using-fastapi>`_ to implement a classing real authentication system.
 Here we just demonstrate the NiceGUI integration.
 """
+import sys
 
+from PyQt5.QtWidgets import QApplication
 from fastapi.responses import RedirectResponse
 
 from nicegui import app, ui
 from starlette.responses import RedirectResponse
+
+from GUI.gui import Fenetre
 
 # in reality users passwords would obviously need to be hashed
 passwords = {'Tim': 'Caus', 'Bruno': 'Zen'}
@@ -20,7 +24,6 @@ def main_page() -> RedirectResponse:
     if not app.storage.user.get('authenticated', False):
         return RedirectResponse('/login')
     with ui.column().classes('absolute-center items-center'):
-        ui.label(f'Hello {app.storage.user["username"]}!').classes('text-2xl')
         ui.button(on_click=lambda: (app.storage.user.clear(), ui.open('/login')), icon='logout').props('outline round')
 
 
@@ -30,6 +33,12 @@ def login() -> RedirectResponse:
         if passwords.get(username.value) == password.value:
             app.storage.user.update({'username': username.value, 'authenticated': True})
             ui.open('/')
+            apps = QApplication(sys.argv)
+            fenetre = Fenetre()
+            fenetre.show()
+
+            # Exécution de l'application Qt
+            apps.exec_()
         else:
             ui.notify('Wrong username or password', color='negative')
 
