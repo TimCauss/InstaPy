@@ -1,4 +1,3 @@
-from datetime import datetime
 
 import undetected_chromedriver as uc
 
@@ -13,7 +12,7 @@ from Resources.pass_to_temp import password_list
 # Config var
 url = 'https://www.instagram.com/accounts/login/'
 
-input_file = "test.txt"
+input_file = "../test.txt"
 num_temp = 1
 # groups = split_words(password_list(input_file), num_temp)
 username = 'Tim0ut_13'
@@ -36,8 +35,6 @@ def login():
     print(f'\n{preString} - Starting')
 
     driver.implicitly_wait(3)
-
-    t1 = datetime.now()
 
     ct = 0
 

