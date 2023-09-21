@@ -6,14 +6,18 @@ use the great `Authlib package <https://docs.authlib.org/en/v0.13/client/starlet
 Here we just demonstrate the NiceGUI integration.
 """
 import sys
+import time
 
 from PyQt5.QtWidgets import QApplication
 from fastapi.responses import RedirectResponse
 
+import subprocess
+from main import main
+
 from nicegui import app, ui
 from starlette.responses import RedirectResponse
 
-from GUI.gui import Fenetre
+from GUI.gui import MainWindow
 
 # in reality users passwords would obviously need to be hashed
 passwords = {'Tim': 'Caus', 'Bruno': 'Zen'}
@@ -31,14 +35,8 @@ def main_page() -> RedirectResponse:
 def login() -> RedirectResponse:
     def try_login() -> None:  # local function to avoid passing username and password as arguments
         if passwords.get(username.value) == password.value:
-            app.storage.user.update({'username': username.value, 'authenticated': True})
-            ui.open('/')
-            apps = QApplication(sys.argv)
-            fenetre = Fenetre()
-            fenetre.show()
+            main()
 
-            # Exécution de l'application Qt
-            apps.exec_()
         else:
             ui.notify('Wrong username or password', color='negative')
 

@@ -9,4 +9,3 @@ def count():
 
 def count_to_percent(words):
     return round(100 * c // words)
-

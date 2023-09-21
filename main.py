@@ -1,9 +1,8 @@
 import sys
 from PyQt5.QtWidgets import QApplication
 from GUI.gui import MainWindow
-from Resources.counter import add_count
 
-if __name__ == "__main__":
+def main():
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
@@ -31,4 +30,8 @@ if __name__ == "__main__":
     window.print_message("")
     # Execut QT application
     app.exec_()
+
+
+if __name__ == "__main__":
+    main()
 
