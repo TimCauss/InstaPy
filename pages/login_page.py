@@ -8,12 +8,14 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException,
 
 from selenium.webdriver.support.wait import WebDriverWait
 
+from Resources.counter import count
 from Resources.fake_reaction import fake_time_wait
 
 
 class LoginPage:
 
     def __init__(self, driver, proc=None):
+        self.test = None
         self.correct_password = False
         self.driver = driver
         self.proc = proc
@@ -46,7 +48,8 @@ class LoginPage:
     #   Remplacer cette méthode par une génération de cookie pré-configuré
     def is_cookies_here(self):
         try:
-            WebDriverWait(self.driver, 1).until(EC.visibility_of_element_located(self.cookie_accept_btn))            # self.driver.save_screenshot('cookies_detected.png')
+            WebDriverWait(self.driver, 1).until(EC.visibility_of_element_located(self.cookie_accept_btn))
+            # self.driver.save_screenshot('cookies_detected.png')
         except TimeoutException:
             print(f'Process n°{self.proc} - Cookies page not detected. Continue')
             # self.driver.save_screenshot('cookies_not_detect.png')
@@ -67,7 +70,6 @@ class LoginPage:
         self.driver.find_element(*self.password_textbox).send_keys(password)
         # self.driver.execute_script("return document.querySelector(\"input[name='password']\").value=\"\"")
         self.driver.find_element(*self.password_textbox).send_keys(Keys.ENTER)
-        print(f'Process n°{self.proc} - Trying password {password}')
 
     def click_login(self):
         self.driver.find_element(*self.login_btn).click()
@@ -75,8 +77,8 @@ class LoginPage:
     def take_screen(self, name):
         self.driver.save_screenshot(f'{name}.png')
 
-    def is_password_works(self, password, ct):
-        self.test = ''
+    def is_password_works(self, password):
+        self.test = False
         WebDriverWait(self.driver, 5).until_not(
             EC.text_to_be_present_in_element_attribute(self.login_btn, 'type', 'disabled'))
 
@@ -88,18 +90,16 @@ class LoginPage:
                 self.driver.find_element(*self.logo).is_displayed()
             except NoSuchElementException:
                 print(f'Process n°{self.proc} - Logged page not detected. Continue')
-                print(f'Essaie({ct}) - Wrong password! [{password}]')
-                self.test = 'wrong'
-                self.driver.save_screenshot(f" Wrong1_{password}_{ct}.png")
+                print(f'Essaie({count()}) - Wrong password! [{password}]')
+                # self.driver.save_screenshot(f" Wrong1_{password}_{count()}.png")
                 self.driver.refresh()
             else:
-                print(f'Essaie({ct}) - OK ! password is : [{password}]')
-                self.driver.save_screenshot(f" OK1_{password}_{ct}.png")
+                print(f'Essaie({count()}) - OK ! password is : {password}')
+                # self.driver.save_screenshot(f" OK1_{password}_{count()}.png")
+                self.test = True
                 time.sleep(10)
         else:
-            print(f'Error msg detected')
-            print(f'Essaie({ct}) - Wrong password! [{password}]')
-            self.driver.save_screenshot(f" Wrong2_{password}_{ct}.png")
+            # self.driver.save_screenshot(f" Wrong2_{password}_{count()}.png")
             # self.driver.execute_script("return document.querySelector(\"input[name='password']\").value=\"\"")
             self.driver.refresh()
 

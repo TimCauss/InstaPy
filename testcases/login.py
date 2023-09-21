@@ -12,7 +12,7 @@ from Resources.pass_to_temp import password_list
 # Config var
 url = 'https://www.instagram.com/accounts/login/'
 
-input_file = "../test.txt"
+input_file = "../Resources/test.txt"
 num_temp = 1
 # groups = split_words(password_list(input_file), num_temp)
 username = 'Tim0ut_13'

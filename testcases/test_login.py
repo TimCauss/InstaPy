@@ -2,12 +2,9 @@ from datetime import datetime
 
 import undetected_chromedriver as uc
 
-import sys
-from PyQt5.QtWidgets import QApplication
-from GUI.gui import Fenetre
+import pytest
 
 from pages.login_page import LoginPage
-from Resources.pass_to_temp import split_words
 from Resources.pass_to_temp import password_list
 
 # Config var
@@ -19,7 +16,7 @@ num_temp = 1
 username = 'Tim0ut_13'
 
 
-def login():
+def test_login():
     options = uc.ChromeOptions()
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--no-sandbox")
@@ -62,12 +59,3 @@ def login():
         login_page.is_password_works(password, ct)
         # t = (datetime.now() - t1).seconds
         # print(f'Trying Password Exec Time : {t}')
-
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    fenetre = Fenetre()
-    fenetre.show()
-
-    # Exécution de l'application Qt
-    app.exec_()
